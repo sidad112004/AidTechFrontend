@@ -1,7 +1,7 @@
 import React from 'react';
 import Notification from './Notification';
 import Help from './Help';
-
+import Cancel from './Cancel';
 function Home() {
   return (
     <>
@@ -87,9 +87,8 @@ function Home() {
         <div className="flex flex-row items-center justify-center gap-8">
           {/* Help component renders its own circular Help button */}
           <Help />
-          <button className="btn btn-circle bg-red-600 hover:bg-red-700 text-white w-32 h-32 text-2xl">
-            Cancel
-          </button>
+          {/* Render the Cancel component */}
+          <Cancel />
         </div>
       </div>
 
