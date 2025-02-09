@@ -15,10 +15,9 @@ function Navbar() {
         </Link>
       </div>
 
-      {/* Center: Menu */}
-      <div className="navbar-center">
-        {/* Desktop Menu */}
-        <ul className="menu menu-horizontal p-0 hidden lg:flex">
+      {/* Desktop Menu: visible on large screens */}
+      <div className="navbar-center hidden lg:flex">
+        <ul className="menu menu-horizontal p-0">
           <li>
             <Link to="/">
               <FaHome className="inline mr-1" />
@@ -44,9 +43,43 @@ function Navbar() {
             </Link>
           </li>
         </ul>
+      </div>
 
-        {/* Mobile Hamburger Menu */}
-        <div className="dropdown lg:hidden">
+      {/* Desktop Right: Coins and Profile (visible on large screens) */}
+      <div className="navbar-end hidden lg:flex items-center gap-4">
+        <div className="tooltip tooltip-bottom" data-tip="Coins">
+          <div className="flex items-center gap-1">
+            <FaCoins className="text-xl" />
+            <span className="text-lg font-medium">{coins}</span>
+          </div>
+        </div>
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
+            <div className="w-10 rounded-full">
+              <img src="https://placeimg.com/80/80/people" alt="Profile" />
+            </div>
+          </label>
+          <ul
+            tabIndex={0}
+            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li>
+              <Link to="/profile">
+                <span role="img" aria-label="Profile">👤</span> Profile
+              </Link>
+            </li>
+            <li>
+              <Link to="/logout">
+                <span role="img" aria-label="Logout">🚪</span> Logout
+              </Link>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      {/* Mobile Menu: visible on small screens, moved to the right */}
+      <div className="navbar-end lg:hidden">
+        <div className="dropdown dropdown-end">
           <label tabIndex={0} className="btn btn-ghost">
             <FaBars className="text-xl" />
           </label>
@@ -78,39 +111,21 @@ function Navbar() {
                 Contact
               </Link>
             </li>
-          </ul>
-        </div>
-      </div>
-
-      {/* Right: Coins and Profile */}
-      <div className="navbar-end flex items-center gap-4">
-        {/* Coins Indicator with coin symbol and value side by side */}
-        <div className="tooltip tooltip-bottom" data-tip="Coins">
-          <div className="flex items-center gap-1">
-            <FaCoins className="text-xl" />
-            <span className="text-lg font-medium">{coins}</span>
-          </div>
-        </div>
-
-        {/* Profile Dropdown */}
-        <div className="dropdown dropdown-end">
-          <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
-            <div className="w-10 rounded-full">
-              <img src="https://placeimg.com/80/80/people" alt="Profile" />
-            </div>
-          </label>
-          <ul
-            tabIndex={0}
-            className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
-          >
             <li>
-              <Link to="/profile">Profile</Link>
+              <a>
+                <FaCoins className="inline mr-1" />
+                {coins} Coins
+              </a>
             </li>
             <li>
-              <Link to="/settings">Settings</Link>
+              <Link to="/profile">
+                <span role="img" aria-label="Profile">👤</span> Profile
+              </Link>
             </li>
             <li>
-              <Link to="/logout">Logout</Link>
+              <Link to="/logout">
+                <span role="img" aria-label="Logout">🚪</span> Logout
+              </Link>
             </li>
           </ul>
         </div>

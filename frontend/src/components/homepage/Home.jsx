@@ -2,13 +2,14 @@ import React from 'react';
 import Notification from './Notification';
 import Help from './Help';
 import Cancel from './Cancel';
+
 function Home() {
   return (
     <>
-      {/* Main Content divided into 2 sections with a dark theme */}
-      <div className="grid grid-cols-2 h-screen p-6 gap-4 text-gray-200">
+      {/* Main Content: Responsive grid */}
+      <div className="grid grid-cols-1 md:grid-cols-2 h-screen p-6 gap-4 text-gray-200">
         {/* Left Section: Detailed Project Description */}
-        <div className="overflow-y-auto p-8 rounded-xl shadow-lg">
+        <div className="overflow-y-auto p-8 rounded-xl shadow-lg bg-gray-800">
           <header className="mb-8">
             <h1 className="text-4xl font-extrabold text-blue-400">AidTech Alliance</h1>
             <p className="mt-2 text-xl text-gray-300">
@@ -83,11 +84,9 @@ function Home() {
           </section>
         </div>
 
-        {/* Right Section: Large Adjacent Action Buttons */}
-        <div className="flex flex-row items-center justify-center gap-8">
-          {/* Help component renders its own circular Help button */}
+        {/* Right Section: Action Buttons */}
+        <div className="flex flex-col items-center justify-center gap-8  p-8 rounded-xl shadow-lg">
           <Help />
-          {/* Render the Cancel component */}
           <Cancel />
         </div>
       </div>

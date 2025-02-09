@@ -7,6 +7,7 @@ import Activerequest from './components/activerequest/Activerequest';
 import Pastrequest from './components/pastrequest/Pastrequest';
 import Contact from './components/contact/contact';
 import Signup from './components/signup/Signup';
+import Profile from './components/profile/Profile';
 
 // A component to hold the routes and conditionally render the Navbar
 function AppContent() {
@@ -26,6 +27,7 @@ function AppContent() {
         <Route path="/activerequest" element={<Activerequest />} />
         <Route path="/pastrequest" element={<Pastrequest />} />
         <Route path="/contact" element={<Contact />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </>
   );
