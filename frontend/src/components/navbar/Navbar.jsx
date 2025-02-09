@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaBars, FaHome, FaTasks, FaHistory, FaEnvelope, FaCoins } from 'react-icons/fa';
 
 function Navbar() {
@@ -9,7 +10,9 @@ function Navbar() {
     <nav className="navbar bg-base-100 shadow-md px-4 sticky top-0 z-50">
       {/* Left: App Name */}
       <div className="navbar-start">
-        <a className="btn btn-ghost normal-case text-xl">MyApp</a>
+        <Link to="/" className="btn btn-ghost normal-case text-xl">
+          MyApp
+        </Link>
       </div>
 
       {/* Center: Menu */}
@@ -17,28 +20,28 @@ function Navbar() {
         {/* Desktop Menu */}
         <ul className="menu menu-horizontal p-0 hidden lg:flex">
           <li>
-            <a>
+            <Link to="/">
               <FaHome className="inline mr-1" />
               Home
-            </a>
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="/activerequest">
               <FaTasks className="inline mr-1" />
-              Active request
-            </a>
+              Active Request
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="/pastrequest">
               <FaHistory className="inline mr-1" />
-              Past request
-            </a>
+              Past Request
+            </Link>
           </li>
           <li>
-            <a>
+            <Link to="/contact">
               <FaEnvelope className="inline mr-1" />
               Contact
-            </a>
+            </Link>
           </li>
         </ul>
 
@@ -52,28 +55,28 @@ function Navbar() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>
+              <Link to="/">
                 <FaHome className="inline mr-1" />
                 Home
-              </a>
+              </Link>
             </li>
             <li>
-              <a>
+              <Link to="/activerequest">
                 <FaTasks className="inline mr-1" />
-                Active request
-              </a>
+                Active Request
+              </Link>
             </li>
             <li>
-              <a>
+              <Link to="/pastrequest">
                 <FaHistory className="inline mr-1" />
-                Past request
-              </a>
+                Past Request
+              </Link>
             </li>
             <li>
-              <a>
+              <Link to="/contact">
                 <FaEnvelope className="inline mr-1" />
                 Contact
-              </a>
+              </Link>
             </li>
           </ul>
         </div>
@@ -101,13 +104,13 @@ function Navbar() {
             className="menu menu-compact dropdown-content mt-3 p-2 shadow bg-base-100 rounded-box w-52"
           >
             <li>
-              <a>Profile</a>
+              <Link to="/profile">Profile</Link>
             </li>
             <li>
-              <a>Settings</a>
+              <Link to="/settings">Settings</Link>
             </li>
             <li>
-              <a>Logout</a>
+              <Link to="/logout">Logout</Link>
             </li>
           </ul>
         </div>
