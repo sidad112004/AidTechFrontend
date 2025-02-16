@@ -13,6 +13,7 @@ import {
 // Register required Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
+
 function Profile() {
   // Sample user data; in a real app, this data would be fetched from an API or context.
   const user = {

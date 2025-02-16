@@ -1,5 +1,6 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
 import Signin from './components/signin/Signin';
 import Navbar from './components/navbar/Navbar';
 import Home from './components/homepage/Home';
@@ -9,15 +10,14 @@ import Contact from './components/contact/contact';
 import Signup from './components/signup/Signup';
 import Profile from './components/profile/Profile';
 
-// A component to hold the routes and conditionally render the Navbar
 function AppContent() {
   const location = useLocation();
-  // Define routes that should NOT display the Navbar
+
   const noNavbarRoutes = ["/signin", "/signup"];
 
   return (
     <>
-      {/* Render Navbar only if current path is not in noNavbarRoutes */}
+
       {noNavbarRoutes.includes(location.pathname) ? null : <Navbar />}
       
       <Routes>
