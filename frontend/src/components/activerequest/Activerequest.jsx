@@ -36,6 +36,7 @@ function ActiveRequestsPage() {
           }
         );
         console.log(data);
+        setRequests(data.data);
       } catch(error) {
         console.log(error.message);
       }
