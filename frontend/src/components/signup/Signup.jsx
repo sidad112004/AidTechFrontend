@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
@@ -7,7 +7,16 @@ import { useNavigate } from "react-router-dom";
 function Signup() {
   const navigate = useNavigate();
   // Default location set to Karad, Maharashtra
-  const defaultLocation = { lat:17.2833, lng:74.2333 };
+  const [defaultLocation, setDefaultLocation] = useState({});
+
+  
+  useEffect(() => {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+        setDefaultLocation({lat: position.coords.latitude, lng: position.coords.longitude});
+      });
+  }, []);
 
   const [formData, setFormData] = useState({
     name: "",
@@ -16,6 +25,7 @@ function Signup() {
     phone: "",
     location: defaultLocation, 
   });
+
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -35,8 +45,8 @@ function Signup() {
     }
 
     try {
-      // console.log("Form Data:", formData);
-     
+      formData.location = defaultLocation;
+      console.log("Form Data:", formData);
       const response = await axios.post(
         "http://localhost:8080/api/auth/signup",
         formData,

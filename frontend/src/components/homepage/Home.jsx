@@ -1,7 +1,6 @@
 import React from 'react';
 
 import Help from './Help';
-import Cancel from './Cancel';
 
 function Home() {
   return (
@@ -87,7 +86,7 @@ function Home() {
         {/* Right Section: Action Buttons */}
         <div className="flex flex-col items-center justify-center gap-8  p-8 rounded-xl shadow-lg">
           <Help />
-          <Cancel />
+          
         </div>
       </div>
 

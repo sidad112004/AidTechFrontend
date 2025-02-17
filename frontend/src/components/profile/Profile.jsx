@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { use, useState } from 'react';
 import { Doughnut, Bar } from 'react-chartjs-2';
+import { useEffect } from 'react';
 import {
   Chart as ChartJS,
   ArcElement,
@@ -9,6 +10,7 @@ import {
   LinearScale,
   BarElement,
 } from 'chart.js';
+import axios from 'axios';
 
 // Register required Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
@@ -16,6 +18,20 @@ ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarEle
 
 function Profile() {
   // Sample user data; in a real app, this data would be fetched from an API or context.
+  const [data,setdata]=useState({});
+  const getdata=async()=>{
+    try {
+         const res=await axios.post("http://localhost:8080/api/get-data",{},{withCredentials:true})
+         
+         setdata(res);
+         console.log("new",res);
+    } catch (error) {
+      
+    }
+  }
+  useEffect(() => {
+    getdata();
+  },[])
   const user = {
     name: 'John Doe',
     email: 'john@example.com',

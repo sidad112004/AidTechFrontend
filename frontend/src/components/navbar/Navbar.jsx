@@ -15,7 +15,7 @@ function Navbar() {
        {withCredentials:true}
       )
       const check=res.data.verifiedPhone;
-      // console.log(res.data)
+      console.log(res.data)
       setCoins(res.data.coins)
       console.log(res.data.coins);
       if(!check){
