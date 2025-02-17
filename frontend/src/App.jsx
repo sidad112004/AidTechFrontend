@@ -6,7 +6,7 @@ import Navbar from './components/navbar/Navbar';
 import Home from './components/homepage/Home';
 import Activerequest from './components/activerequest/Activerequest';
 import Pastrequest from './components/pastrequest/Pastrequest';
-import Contact from './components/contact/Contact';
+// import Contact from './components/contact/Contact';
 import Signup from './components/signup/Signup';
 import Profile from './components/profile/Profile';
 import OTPVerification from './components/signup/OTPverification';
@@ -31,7 +31,7 @@ function AppContent() {
         <Route path="/OTPVerification" element={<OTPVerification />} />
         <Route path="/activerequest" element={<Activerequest />} />
         <Route path="/pastrequest" element={<Pastrequest />} />
-        <Route path="/contact" element={<Contact />} />
+        {/* <Route path="/contact" element={<Contact />} /> */}
         <Route path="/profile" element={<Profile />} />
       </Routes>
     </>

@@ -74,12 +74,12 @@ function Navbar() {
               Past Request
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/contact">
               <FaEnvelope className="inline mr-1" />
               Contact
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
 
@@ -143,12 +143,12 @@ function Navbar() {
                 Past Request
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/contact">
                 <FaEnvelope className="inline mr-1" />
                 Contact
               </Link>
-            </li>
+            </li> */}
             <li>
               <a>
                 <FaCoins className="inline mr-1" />
