@@ -6,19 +6,6 @@ function Pastrequest() {
   const [pastRequests, setPastRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
- 
-  const getpastreques=async()=>{
-    try {
-       const res=await axios.post("http://localhost:8080/api/help-requests/pastrequestofuser",{},{withCredentials:true});
-       console.log(res);
-    } catch (error) {
-      console.log(error);
-    }
-  }
-  
-  useEffect(()=>{
-       getpastreques();
-  },[])
   // Helper function to get card background class based on urgency tier.
   const getCardColor = (urgencyTier) => {
     if (urgencyTier >= 8) {
@@ -30,57 +17,20 @@ function Pastrequest() {
     }
   };
 
+  // Simulate fetching completed (past) requests from an API or data source.
+  const fetchPastRequests = async () => {
+    try {
+      const data = await axios.post('http://localhost:8080/api/help-requests/pastrequestofuser',{
+        withCredentials: true
+      });
+      console.log(data);
+      setPastRequests(data);
+    } catch(error) {
+      console.log(error.message);
+    }
+  };
+    
   useEffect(() => {
-    // Simulate fetching completed (past) requests from an API or data source.
-    const fetchPastRequests = async () => {
-      const data = [
-        {
-          id: 1,
-          name: "Alice",
-          title: "Completed Grocery Help",
-          description: "Assisted with grocery shopping last week.",
-          urgencyTier: 3,
-          isActive: false,
-          completionTime: "2:00 PM",
-          rewardCoins: 50,
-          address: "123 Main St, City, Country",
-          completedAt: "2025-02-05T14:00:00",
-        },
-        {
-          id: 2,
-          name: "Bob",
-          title: "Completed Allergic Reaction Help",
-          description: "Provided immediate help for a severe allergic reaction.",
-          urgencyTier: 8,
-          isActive: false,
-          completionTime: "ASAP",
-          rewardCoins: 100,
-          address: "456 Elm St, City, Country",
-          completedAt: "2025-02-07T10:00:00",
-        },
-        {
-          id: 3,
-          name: "Charlie",
-          title: "Old Completed Request",
-          description: "Helped with a minor home repair task completed earlier.",
-          urgencyTier: 2,
-          isActive: false,
-          completionTime: "N/A",
-          rewardCoins: 0,
-          address: "789 Oak St, City, Country",
-          completedAt: "2025-02-01T09:00:00",
-        },
-      ];
-
-      // Filter for only completed requests (isActive === false)
-      const completedRequests = data.filter(request => !request.isActive);
-      // Sort by completion date (latest completed first)
-      completedRequests.sort(
-        (a, b) => new Date(b.completedAt) - new Date(a.completedAt)
-      );
-      setPastRequests(completedRequests);
-    };
-
     fetchPastRequests();
   }, []);
 
