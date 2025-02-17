@@ -1,10 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import './ActiveRequests.css'; // Import the custom CSS
 
 function ActiveRequestsPage() {
   const [requests, setRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
+
+  const [defaultLocation, setDefaultLocation] = useState({ lat: 17.2833, lng: 74.2333 });
+  useEffect(() => {
+      navigator.geolocation.getCurrentPosition(function(position) {
+        console.log("Latitude is :", position.coords.latitude);
+        console.log("Longitude is :", position.coords.longitude);
+        setDefaultLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+      });
+  }, []);
 
   // Helper function to get card background class based on urgency tier.
   const getTierClass = (urgencyTier) => {
@@ -17,48 +27,62 @@ function ActiveRequestsPage() {
     }
   };
 
+  const fetchRequests = async () => {
+    try {
+      const data = await axios.get(`http://localhost:8080/api/helpRequests/nearby?latitude=${defaultLocation.lat}&longitude=${defaultLocation.lng}`,
+        {
+          withCredentials: true
+        }
+      );
+      console.log(data);
+    } catch(error) {
+      console.log(error.message);
+    }
+  }
+
   useEffect(() => {
     // Simulate fetching active requests from an API or data source.
-    const fetchRequests = async () => {
-      const data = [
-        {
-          id: 1,
-          name: "siddes",
-          title: "Need Help with Groceries",
-          description: "I need assistance carrying groceries from the store.",
-          urgencyTier: 3, // Tier 3: Non-urgent Help
-          isActive: true,
-          completionTime: "2:00 PM",
-          rewardCoins: 50,
-          address: "123 Main St, City, Country",
-        },
-        {
-          id: 2,
-          name: "Sidde",
-          title: "Severe Allergic Reaction",
-          description: "I'm experiencing a severe allergic reaction and need help immediately.",
-          urgencyTier: 8, // Tier 8: High Urgency
-          isActive: true,
-          completionTime: "ASAP",
-          rewardCoins: 100,
-          address: "456 Elm St, City, Country",
-        },
-        {
-          id: 3,
-          title: "Old Inactive Request",
-          description: "This request is no longer active.",
-          urgencyTier: 2, // Tier 2: Minor Help
-          isActive: false,
-          completionTime: "N/A",
-          rewardCoins: 0,
-          address: "789 Oak St, City, Country",
-        },
-      ];
+    // const fetchRequests = async () => {
+    //   const data = [
+    //     {
+    //       id: 1,
+    //       name: "siddes",
+    //       title: "Need Help with Groceries",
+    //       description: "I need assistance carrying groceries from the store.",
+    //       urgencyTier: 3, // Tier 3: Non-urgent Help
+    //       isActive: true,
+    //       completionTime: "2:00 PM",
+    //       rewardCoins: 50,
+    //       address: "123 Main St, City, Country",
+    //     },
+    //     {
+    //       id: 2,
+    //       name: "Sidde",
+    //       title: "Severe Allergic Reaction",
+    //       description: "I'm experiencing a severe allergic reaction and need help immediately.",
+    //       urgencyTier: 8, // Tier 8: High Urgency
+    //       isActive: true,
+    //       completionTime: "ASAP",
+    //       rewardCoins: 100,
+    //       address: "456 Elm St, City, Country",
+    //     },
+    //     {
+    //       id: 3,
+    //       title: "Old Inactive Request",
+    //       description: "This request is no longer active.",
+    //       urgencyTier: 2, // Tier 2: Minor Help
+    //       isActive: false,
+    //       completionTime: "N/A",
+    //       rewardCoins: 0,
+    //       address: "789 Oak St, City, Country",
+    //     },
+    //   ];
 
       // Filter to only include active requests.
-      const activeRequests = data.filter(request => request.isActive);
-      setRequests(activeRequests);
-    };
+      // const activeRequests = data.filter(request => request.isActive);
+      // setRequests(activeRequests);
+      // fetchRequests();
+    // };
 
     fetchRequests();
   }, []);
