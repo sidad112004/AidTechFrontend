@@ -7,14 +7,46 @@ function ActiveRequestsPage() {
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
 
+  // Initial location state
   const [defaultLocation, setDefaultLocation] = useState({ lat: 17.2833, lng: 74.2333 });
+  const [isLocationReady, setIsLocationReady] = useState(false);
+
+  // First useEffect to get geolocation
   useEffect(() => {
-      navigator.geolocation.getCurrentPosition(function(position) {
-        console.log("Latitude is :", position.coords.latitude);
-        console.log("Longitude is :", position.coords.longitude);
-        setDefaultLocation({ lat: position.coords.latitude, lng: position.coords.longitude });
+    navigator.geolocation.getCurrentPosition(function(position) {
+      console.log("Latitude is :", position.coords.latitude);
+      console.log("Longitude is :", position.coords.longitude);
+      setDefaultLocation({
+        lat: position.coords.latitude,
+        lng: position.coords.longitude
       });
+      setIsLocationReady(true); // Mark that location is ready
+    }, function(error) {
+      console.error("Error getting location:", error);
+      setIsLocationReady(true); // Even on error, mark as ready to use default coordinates
+    });
+    
   }, []);
+    const fetchRequests = async () => {
+      try {
+        console.log(defaultLocation);
+        const data = await axios.get(`http://localhost:8080/api/help-requests/nearby?longitude=${defaultLocation.lng}&latitude=${defaultLocation.lat}`,
+          {
+            withCredentials: true
+          }
+        );
+        console.log(data);
+      } catch(error) {
+        console.log(error.message);
+      }
+    }
+
+  // Second useEffect to fetch data when location is ready
+  useEffect(() => {
+    if (isLocationReady) {
+      fetchRequests();
+    }
+  }, [isLocationReady]);
 
   // Helper function to get card background class based on urgency tier.
   const getTierClass = (urgencyTier) => {
@@ -27,20 +59,7 @@ function ActiveRequestsPage() {
     }
   };
 
-  const fetchRequests = async () => {
-    try {
-      const data = await axios.get(`http://localhost:8080/api/helpRequests/nearby?latitude=${defaultLocation.lat}&longitude=${defaultLocation.lng}`,
-        {
-          withCredentials: true
-        }
-      );
-      console.log(data);
-    } catch(error) {
-      console.log(error.message);
-    }
-  }
-
-  useEffect(() => {
+  // useEffect(() => {
     // Simulate fetching active requests from an API or data source.
     // const fetchRequests = async () => {
     //   const data = [
@@ -84,8 +103,8 @@ function ActiveRequestsPage() {
       // fetchRequests();
     // };
 
-    fetchRequests();
-  }, []);
+  //   fetchRequests();
+  // }, []);
 
   // Open the modal and set the selected request.
   const openModal = (request) => {
