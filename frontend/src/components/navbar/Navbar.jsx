@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaHome, FaTasks, FaHistory, FaEnvelope, FaCoins } from 'react-icons/fa';
 import axios from 'axios';
@@ -8,6 +8,14 @@ function Navbar() {
   // Using useState for dynamic coin count
   const [coins, setCoins] = useState(0);
   const navigate = useNavigate();
+
+  useEffect(()=>{
+    try {
+      
+    } catch (error) {
+      
+    }
+  },[])
   const handlelogout=async(e)=>{
     e.preventDefault();
     try {
@@ -140,9 +148,9 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/logout">
-                <span role="img" aria-label="Logout">🚪</span> Logout
-              </Link>
+             
+                <button onClick={handlelogout} role="img" aria-label="Logout">🚪Logout</button> 
+              
             </li>
           </ul>
         </div>
