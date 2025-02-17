@@ -1,5 +1,7 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Doughnut, Bar } from 'react-chartjs-2';
+import axios from 'axios';
+import { useNavigate } from "react-router-dom";
 import {
   Chart as ChartJS,
   ArcElement,
@@ -13,49 +15,71 @@ import {
 // Register required Chart.js components
 ChartJS.register(ArcElement, Tooltip, Legend, CategoryScale, LinearScale, BarElement);
 
-
 function Profile() {
-  // Sample user data; in a real app, this data would be fetched from an API or context.
-  const user = {
-    name: 'John Doe',
-    email: 'john@example.com',
-    phone: '+1234567890',
-    coins: 200,
-    totalTasks: 23,      // Total tasks (including completed, pending, and canceled)
-    completedTasks: 15,
-    pendingTasks: 5,
-    canceledTasks: 3,
+  const navigate=useNavigate();
+  const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
+  // Fetch user data from backend
+  const getData = async () => {
+    try {
+      const res = await axios.post(
+        'http://localhost:8080/api/get-data',
+        {},
+        { withCredentials: true }
+      );
+      console.log('Response:', res.data);
+      setUser(res.data);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+    } finally {
+      setLoading(false);
+    }
   };
 
-  // Data for the doughnut chart representing task distribution
+  useEffect(() => {
+    getData();
+  }, []);
+  // Show a loading indicator while the data is being fetched
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+        <span>Loading...</span>
+      </div>
+    );
+  }
+  // If user data is not loaded successfully, show an error message
+  if (!user) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-900 text-white">
+        <span>Error loading user data.</span>
+      </div>
+    );
+  }
+  // Prepare chart data, using fallback 0 for canceledTasks if it's not provided
+  const canceledTasks = user.canceledTasks || 0;
   const tasksDoughnutData = {
     labels: ['Completed', 'Pending', 'Canceled'],
     datasets: [
       {
-        data: [user.completedTasks, user.pendingTasks, user.canceledTasks],
+        data: [user.completedTasks, user.pendingTasks, canceledTasks],
         backgroundColor: ['#34D399', '#FBBF24', '#F87171'], // green, amber, red
         hoverBackgroundColor: ['#10B981', '#F59E0B', '#EF4444'],
       },
     ],
   };
 
-  // Data for the bar chart representing task counts
   const tasksBarData = {
     labels: ['Total Tasks', 'Completed', 'Pending', 'Canceled'],
     datasets: [
       {
         label: 'Tasks',
-        data: [user.totalTasks, user.completedTasks, user.pendingTasks, user.canceledTasks],
+        data: [user.totalTasks, user.completedTasks, user.pendingTasks, canceledTasks],
         backgroundColor: ['#60A5FA', '#34D399', '#FBBF24', '#F87171'], // blue, green, amber, red
       },
     ],
   };
 
-  // Logout handler (replace with your actual logout logic)
-  const handleLogout = () => {
-    console.log('User logged out');
-    // e.g., clear tokens, redirect to login page, etc.
-  };
+  
 
   return (
     <div className="min-h-screen bg-gray-900 p-6 text-white">
@@ -71,11 +95,7 @@ function Profile() {
                 Coins: <span className="font-bold text-green-400">{user.coins}</span>
               </p>
             </div>
-            <div className="mt-4 md:mt-0">
-              <button onClick={handleLogout} className="btn btn-error">
-                Logout
-              </button>
-            </div>
+            
           </div>
         </div>
 

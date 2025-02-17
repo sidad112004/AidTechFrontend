@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import './PastRequests.css'; // Import the custom CSS file
+import axios from 'axios';
 
 function Pastrequest() {
   const [pastRequests, setPastRequests] = useState([]);
   const [selectedRequest, setSelectedRequest] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
-
+ 
+  const getpastreques=async()=>{
+    try {
+       const res=await axios.post("http://localhost:8080/api/help-requests/pastrequestofuser",{},{withCredentials:true});
+       console.log(res);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+  
+  useEffect(()=>{
+       getpastreques();
+  },[])
   // Helper function to get card background class based on urgency tier.
   const getCardColor = (urgencyTier) => {
     if (urgencyTier >= 8) {

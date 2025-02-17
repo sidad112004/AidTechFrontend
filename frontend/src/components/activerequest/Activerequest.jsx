@@ -120,12 +120,12 @@ function ActiveRequestsPage() {
   };
 
   // Sort requests so that higher urgencyTier comes first.
-  const sortedRequests = [...requests].sort((a, b) => b.urgencyTier - a.urgencyTier);
+  const sortedRequests = requests.length>0?[...requests].sort((a, b) => b.urgencyTier - a.urgencyTier):[];
 
   return (
     <div className="container mx-auto p-6">
       <h1 className="text-4xl font-bold text-center mb-8 text-white">
-        My Active Requests
+        Active Requests
       </h1>
 
       {sortedRequests.length > 0 ? (

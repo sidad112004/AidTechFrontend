@@ -15,7 +15,7 @@ function Navbar() {
        {withCredentials:true}
       )
       const check=res.data.verifiedPhone;
-      // console.log(res.data)
+      console.log(res.data)
       setCoins(res.data.coins)
       console.log(res.data.coins);
       if(!check){
@@ -38,7 +38,7 @@ function Navbar() {
       console.log("User logged out:", response.data);
       toast.success(response.data.message);
       navigate("/signin");
-      
+
     } catch (error) {
       console.log(Error);
     }
@@ -74,12 +74,12 @@ function Navbar() {
               Past Request
             </Link>
           </li>
-          <li>
+          {/* <li>
             <Link to="/contact">
               <FaEnvelope className="inline mr-1" />
               Contact
             </Link>
-          </li>
+          </li> */}
         </ul>
       </div>
 
@@ -107,9 +107,9 @@ function Navbar() {
               </Link>
             </li>
             <li>
-             
+
                 <button onClick={handlelogout} role="img" aria-label="Logout">🚪Logout</button> 
-              
+
             </li>
           </ul>
         </div>
@@ -143,12 +143,12 @@ function Navbar() {
                 Past Request
               </Link>
             </li>
-            <li>
+            {/* <li>
               <Link to="/contact">
                 <FaEnvelope className="inline mr-1" />
                 Contact
               </Link>
-            </li>
+            </li> */}
             <li>
               <a>
                 <FaCoins className="inline mr-1" />
@@ -161,9 +161,9 @@ function Navbar() {
               </Link>
             </li>
             <li>
-             
+
                 <button onClick={handlelogout} role="img" aria-label="Logout">🚪Logout</button> 
-              
+
             </li>
           </ul>
         </div>
