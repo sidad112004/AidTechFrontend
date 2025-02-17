@@ -1,10 +1,27 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaHome, FaTasks, FaHistory, FaEnvelope, FaCoins } from 'react-icons/fa';
-
+import axios from 'axios';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
 function Navbar() {
   // Using useState for dynamic coin count
-  const [coins, setCoins] = useState(120);
+  const [coins, setCoins] = useState(0);
+  const navigate = useNavigate();
+  const handlelogout=async(e)=>{
+    e.preventDefault();
+    try {
+      const response = await axios.post("http://localhost:8080/api/auth/logout",
+       {},
+      {withCredentials:true});
+      console.log("User logged out:", response.data);
+      toast.success(response.data.message);
+      navigate("/signin");
+      
+    } catch (error) {
+      console.log(Error);
+    }
+  }
 
   return (
     <nav className="navbar bg-base-100 shadow-md px-4 sticky top-0 z-50">
@@ -69,9 +86,9 @@ function Navbar() {
               </Link>
             </li>
             <li>
-              <Link to="/logout">
-                <span role="img" aria-label="Logout">🚪</span> Logout
-              </Link>
+             
+                <button onClick={handlelogout} role="img" aria-label="Logout">🚪Logout</button> 
+              
             </li>
           </ul>
         </div>

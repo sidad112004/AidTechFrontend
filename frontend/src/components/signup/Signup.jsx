@@ -2,11 +2,12 @@ import React, { useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import toast, { Toaster } from "react-hot-toast";
+import { useNavigate } from "react-router-dom";
 
 function Signup() {
+  const navigate = useNavigate();
   // Default location set to Karad, Maharashtra
-  const defaultLocation = [ 17.2833, 74.2333 ];
-   console.log(defaultLocation)
+  const defaultLocation = { lat:17.2833, lng:74.2333 };
 
   const [formData, setFormData] = useState({
     name: "",
@@ -34,27 +35,28 @@ function Signup() {
     }
 
     try {
-      console.log("Form Data:", formData);
-      toast.success("Signing up... Please wait!");
+      // console.log("Form Data:", formData);
+     
       const response = await axios.post(
         "http://localhost:8080/api/auth/signup",
-        formData
+        formData,
+        {withCredentials:true}
       );
-      
       toast.success("Signup successful!");
-      console.log("User Signed Up:", response.data);
+      // console.log("User Signed Up:", response.data);
 
       // Reset form (keeping the default location)
-      // setFormData({
-      //   name: "",
-      //   email: "",
-      //   password: "",
-      //   phone: "",
-      //   location: defaultLocation,
-      // });
+      setFormData({
+        name: "",
+        email: "",
+        password: "",
+        phone: "",
+        location: defaultLocation,
+      });
+      navigate("/");
     } catch (error) {
       console.error("Signup failed:", error);
-      toast.error("Signup failed! Please try again.");
+      toast.error(error.response.data.message);
     }
   };
 

@@ -25,7 +25,7 @@ function Signin() {
     try {
       const response = await axios.post(
         "http://localhost:8080/api/auth/login",
-        { email, password }
+        { email, password },{withCredentials:true}
       );
       toast.success("Signin successful!");
       console.log("User Signed In:", response.data);

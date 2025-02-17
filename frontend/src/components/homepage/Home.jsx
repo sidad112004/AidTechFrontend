@@ -1,5 +1,5 @@
 import React from 'react';
-import Notification from './Notification';
+
 import Help from './Help';
 import Cancel from './Cancel';
 
@@ -91,10 +91,7 @@ function Home() {
         </div>
       </div>
 
-      {/* Notification Component fixed to the bottom right */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <Notification />
-      </div>
+      
     </>
   );
 }
