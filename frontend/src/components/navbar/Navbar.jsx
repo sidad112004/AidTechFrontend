@@ -8,13 +8,26 @@ function Navbar() {
   // Using useState for dynamic coin count
   const [coins, setCoins] = useState(0);
   const navigate = useNavigate();
-
-  useEffect(()=>{
+  const getdata=async()=>{
     try {
-      
-    } catch (error) {
-      
-    }
+      const res = await axios.post("http://localhost:8080/api/get-data",
+       {},
+       {withCredentials:true}
+      )
+      const check=res.data.verifiedPhone;
+      // console.log(res.data)
+      setCoins(res.data.coins)
+      console.log(res.data.coins);
+      if(!check){
+         navigate('/OTPVerification')
+      }
+  } catch (error) {
+      console.log(error);
+      navigate('/signin')
+  }
+  }
+  useEffect(()=>{
+      getdata();
   },[])
   const handlelogout=async(e)=>{
     e.preventDefault();
