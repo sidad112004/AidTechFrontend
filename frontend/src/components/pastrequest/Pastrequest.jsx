@@ -20,11 +20,11 @@ function Pastrequest() {
   // Simulate fetching completed (past) requests from an API or data source.
   const fetchPastRequests = async () => {
     try {
-      const data = await axios.post('http://localhost:8080/api/help-requests/pastrequestofuser',{
+      const data = await axios.post('http://localhost:8080/api/help-requests/pastrequestofuser',{},{
         withCredentials: true
       });
-      console.log(data);
-      setPastRequests(data);
+      console.log(data.data.data);
+      setPastRequests(data.data.data);
     } catch(error) {
       console.log(error.message);
     }
