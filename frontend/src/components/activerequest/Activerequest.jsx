@@ -30,13 +30,15 @@ function ActiveRequestsPage() {
     const fetchRequests = async () => {
       try {
         console.log(defaultLocation);
-        const data = await axios.get(`http://localhost:8080/api/help-requests/nearby?longitude=${defaultLocation.lng}&latitude=${defaultLocation.lat}`,
+        const url = `http://localhost:8080/api/help-requests/nearby?latitude=${defaultLocation.lat}&longitude=${defaultLocation.lng}`;
+        console.log(url);
+        const data = await axios.get(url,
           {
             withCredentials: true
           }
         );
         console.log(data);
-        setRequests(data.data);
+        setRequests(data.data.data);
       } catch(error) {
         console.log(error.message);
       }
