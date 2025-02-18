@@ -30,7 +30,7 @@ function ActiveRequestsPage() {
     const fetchRequests = async () => {
       try {
         console.log(defaultLocation);
-        const url = `http://localhost:8080/api/help-requests/nearby?latitude=${defaultLocation.lat}&longitude=${defaultLocation.lng}`;
+        const url = `http://localhost:8080/api/help-requests/nearby?latitude=${defaultLocation.lat}&longitude=${defaultLocation.lng}&maxDistance=5000`;
         console.log(url);
         const data = await axios.get(url,
           {
